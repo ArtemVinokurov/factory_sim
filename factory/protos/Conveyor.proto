@@ -1,0 +1,169 @@
+#VRML_SIM R2023b utf8
+# Конвейерная лента
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Plastic.proto"
+
+PROTO Conveyor [
+  field SFVec3f translation 0 0 0
+  field SFRotation rotation 0 0 1 0
+  field SFString name "conveyor"
+  field SFString controller "<extern>"
+  field SFFloat acceleration -1
+  field SFFloat speed 0.5
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    name IS name
+    controller IS controller
+    children [
+      Pose {
+        translation 0 0 -0.035
+        children [
+          CadShape {
+            url [
+              "../assets/conveyor.dae"
+            ]
+          }
+        ]
+      }
+      DEF TRACK_BELT Track {
+        translation -2.526050059923187e-17 5.280255689986144e-07 0.007301386062401716
+        rotation -0.9999999997323559 -2.502069281608098e-06 2.3000613844717915e-05 4.379775502719403e-12
+        children [
+          DEF TRACK_WHEEL_1 TrackWheel {
+            position 0.3 0
+            rotation 0.03198815758840375 0.9994858012777477 -0.0022115194500869737 0.13812226376548364
+            radius 0.03035
+            children [
+              Pose {
+                translation 0 0.05 0
+                rotation 0 0 1 1.57
+                children [
+                  DEF WHEEL_SHAPE CadShape {
+                    url [
+                      "../assets/conveyor_wheel.dae"
+                    ]
+                  }
+                ]
+              }
+              Pose {
+                translation 0 -0.05 0
+                rotation 0 0 1 1.57
+                children [
+                  USE WHEEL_SHAPE
+                ]
+              }
+            ]
+          }
+          DEF TRACK_WHEEL_2 TrackWheel {
+            position -0.3 0
+            rotation -0.08921486429784237 0.9959933055733664 0.0061679203429303876 0.13860504950336155
+            radius 0.03035
+            children [
+              Pose {
+                translation 0 0.05 0
+                rotation 0 0 1 1.57
+                children [
+                  USE WHEEL_SHAPE
+                ]
+              }
+              Pose {
+                translation 0 -0.05 0
+                rotation 0 0 1 1.57
+                children [
+                  USE WHEEL_SHAPE
+                ]
+              }
+            ]
+          }
+        ]
+        boundingObject DEF BOU_GROUP Group {
+          children [
+            Pose {
+              translation 0 0 0.023
+              children [
+                Box {
+                  size 0.6 0.2 0.025
+                }
+              ]
+            }
+            Pose {
+              translation 0.3 0 0
+              rotation 1 0 0 -1.5707953071795862
+              children [
+                DEF WHEEL_BOU Cylinder {
+                  height 0.200
+                  radius 0.036
+                }
+              ]
+            }
+            Pose {
+              translation -0.3 0 0
+              rotation 1 0 0 -1.5707953071795862
+              children [
+                USE WHEEL_BOU
+              ]
+            }
+          ]
+        }
+        physics Physics {
+        }
+        device [
+          LinearMotor {
+            name "belt_motor"
+            acceleration IS acceleration
+            maxVelocity IS speed
+          }
+        ]
+        animatedGeometry Group {
+          children [
+            Shape {
+              appearance Plastic {
+                type "padded"
+                IBLStrength 2
+              }
+              geometry Box {
+                size 0.025 0.2 0.01
+              }
+            }
+          ]
+        }
+        geometriesCount 54
+      }
+    ]
+    boundingObject Group {
+      children [
+        Pose {
+          translation 0 -0.103 0.009
+          children [
+            Box {
+              size 0.66 0.003 0.08
+            }
+          ]
+        }
+        Pose {
+          translation 0 0.103 0.009
+          children [
+            Box {
+              size 0.66 0.003 0.08
+            }
+          ]
+        }
+        Pose {
+          translation 0 0 -0.033
+          children [
+            Shape {
+              geometry Box {
+                size 0.6 0.253 0.009
+              }
+            }
+          ]
+        }
+      ]
+    }
+    physics Physics {
+      mass 5
+    }
+  }
+}

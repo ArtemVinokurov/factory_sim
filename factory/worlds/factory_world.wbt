@@ -1,0 +1,295 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/Plaster.proto"
+EXTERNPROTO "../protos/PR15.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/tables/protos/Table.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/OldSteel.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/pallet/protos/WoodenPallet.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/containers/protos/CardboardBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/devices/robotiq/protos/RobotiqEPickGripper.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.2869319267700749 0.031716528449721816 0.9574257836632092 2.1063836591727925
+  position 2.1368533744483167 -4.731589598049742 3.304136891704235
+}
+DirectionalLight {
+  ambientIntensity 1
+  direction 0.1 -0.5 0.3
+}
+RectangleArena {
+  floorSize 10 10
+  floorAppearance Plaster {
+  }
+  wallHeight 1
+}
+CardboardBox {
+  translation 0.549939 -0.976307 0.534833
+  rotation -0.004704855797909637 0.33213214838890354 -0.9432211301378336 2.8408834874427393e-05
+  size 0.25 0.25 0.25
+  mass 0.1
+}
+PR15 {
+  hidden translation_1 -4.172852152706241e-08 -1.3041684399084374e-09 -0.0020374265448696582
+  hidden rotation_1 0.9999999931514041 8.644605189096005e-05 -7.889405501470614e-05 0.00015718805390726567
+  hidden position_1_0 0.00015911227961093967
+  hidden rotation_2 0 0 1 0.00023868393301680025
+  hidden position_2_0 2.5963087231261648e-05
+  hidden rotation_3 -0.9999999996209277 1.9469821617922114e-05 1.946973737617953e-05 1.5708000003790719
+  hidden position_3_0 2.5932111011167972e-05
+  hidden rotation_4 0 0 1 3.8899988606888316e-05
+  hidden position_4_0 1.9406046591713764e-05
+  hidden rotation_5 0 0 1 2.9112598112078387e-05
+  hidden position_5_0 8.682092377681396e-06
+  hidden rotation_6 0.9999999999575924 -6.512134410387373e-06 6.512106233778401e-06 1.5708000000424072
+  hidden position_6_0 4.00347324580643e-06
+  hidden rotation_7 -0.9999999999909791 3.003499586393085e-06 3.003486590894513e-06 1.5708000000090192
+  hidden position_8_0 1.1684151596997429e-11
+  translation -3.1 -0.91 0.31
+  name "PR15(1)"
+  controller "<none>"
+  toolSlot [
+    RobotiqEPickGripper {
+      rotation 0 1 0 3.14
+    }
+  ]
+}
+TexturedBackground {
+  texture "factory"
+}
+PR15 {
+  hidden translation_1 -4.172852130298866e-08 -1.3041684121528618e-09 -0.0020374265448696027
+  hidden rotation_1 0.9999999931514041 8.644605188337439e-05 -7.889405501341031e-05 0.00015718805390642552
+  hidden position_1_0 0.00015911227961156704
+  hidden rotation_2 0 0 1 0.00023868393301680025
+  hidden position_2_0 2.596308723114262e-05
+  hidden rotation_3 -0.9999999996209277 1.946982161840963e-05 1.946973737666705e-05 1.5708000003790719
+  hidden position_3_0 2.5932111010006466e-05
+  hidden rotation_4 0 0 1 3.8899988606888316e-05
+  hidden position_4_0 1.9406046591874304e-05
+  hidden rotation_5 0 0 0.9999999999999999 2.9112598112078387e-05
+  hidden position_5_0 8.682092379015029e-06
+  hidden rotation_6 0.9999999999575924 -6.512134411697774e-06 6.512106235088793e-06 1.5708000000424072
+  hidden position_6_0 4.003473245856988e-06
+  hidden rotation_7 -0.9999999999909791 3.0034995861207442e-06 3.0034865906221724e-06 1.5708000000090192
+  hidden position_8_0 1.1684262050862431e-11
+  translation 0 -0.1 0.31
+  controller "label_sticker"
+  toolSlot [
+    RobotiqEPickGripper {
+      rotation 0 1 0 3.14
+    }
+  ]
+}
+DEF belt Robot {
+  translation -0.81 -0.99 0.01
+  rotation 0 0 1 3.14
+  children [
+    DistanceSensor {
+      translation -0.690512 -0.63945 0.51
+      rotation 0 0 1 1.57
+      name "box_trigger"
+      lookupTable [
+        0 0 0
+        10 1000 0
+      ]
+      type "laser"
+      aperture 0.001
+    }
+    Track {
+      translation -1.646854874692849e-10 -5.551115123125783e-16 0.2998792687224884
+      rotation 0.015743287710921854 -0.9998760667662707 -2.510649454472252e-07 9.433462203050424e-06
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/textures/rubber/dotted_rubber_base_color.jpg"
+              ]
+            }
+            roughnessMap ImageTexture {
+              url [
+                "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/textures/rubber/dotted_rubber_roughness.jpg"
+              ]
+            }
+            metalness 0
+            normalMap ImageTexture {
+              url [
+                "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/textures/rubber/dotted_rubber_normal.jpg"
+              ]
+            }
+            occlusionMap ImageTexture {
+              url [
+                "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/textures/rubber/dotted_rubber_occlusion.jpg"
+              ]
+            }
+            textureTransform TextureTransform {
+              scale 12.4 2
+              translation -0.6162580645161257 0
+            }
+          }
+          geometry DEF BELT_BO Box {
+            size 3.1 0.5 0.2
+          }
+        }
+      ]
+      boundingObject USE BELT_BO
+      physics Physics {
+        density -1
+        mass 1
+      }
+      device [
+        LinearMotor {
+          name "belt_motor"
+          maxVelocity 0.1
+          sound ""
+        }
+      ]
+      textureAnimation 0.3225806451612903 0
+      linearVelocity -6.313372308296707e-14 1.3874407746893369e-15 -3.474605136943865e-11
+      angularVelocity -2.500249305285873e-10 -1.5695832910838358e-07 2.6332966168620804e-15
+    }
+    Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/textures/corrugated_metal/corrugated_metal_base_color.jpg"
+          ]
+        }
+        roughnessMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/textures/corrugated_metal/corrugated_metal_roughness.jpg"
+          ]
+        }
+        metalnessMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/textures/corrugated_metal/corrugated_metal_metalness.jpg"
+          ]
+        }
+        normalMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/textures/corrugated_metal/corrugated_metal_normal.jpg"
+          ]
+        }
+        occlusionMap ImageTexture {
+          url [
+            "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/textures/corrugated_metal/corrugated_metal_occlusion.jpg"
+          ]
+        }
+        textureTransform TextureTransform {
+          scale 2 2
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            1.58 -0.28 0
+            1.58 -0.28 0.41000000000000003
+            -1.58 -0.28 0.41000000000000003
+            -1.58 -0.28 0
+            1.58 0.28 0
+            1.58 0.28 0.41000000000000003
+            -1.58 0.28 0.41000000000000003
+            -1.58 0.28 0
+            1.55 -0.25 0.41000000000000003
+            1.55 0.25 0.41000000000000003
+            -1.55 0.25 0.41000000000000003
+            -1.55 -0.25 0.41000000000000003
+            1.55 -0.25 0.4
+            1.55 0.25 0.4
+            -1.55 0.25 0.4
+            -1.55 -0.25 0.4
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+            0 0.25949367088607594
+            1 0.25949367088607594
+            0 0.25949367088607594
+            0.17721518987341772 0.25949367088607594
+            0.17721518987341772 0
+            0 0
+            0.001 0
+            0.001 0.001
+            0 0.001
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1, 4, 7, 6, 5, -1, 0, 4, 5, 1, -1, 7, 3, 2, 6, -1, 1, 5, 9, 8, -1, 5, 6, 10, 9, -1, 6, 2, 11, 10, -1, 2, 1, 8, 11, -1, 0, 3, 7, 4, -1, 8, 9, 13, 12, -1, 9, 10, 14, 13, -1, 10, 11, 15, 14, -1, 11, 8, 12, 15, -1
+        ]
+        texCoordIndex [
+          1, 5, 4, 0, -1, 0, 1, 5, 4, -1, 0, 8, 7, 6, -1, 0, 8, 7, 6, -1, 9, 10, 11, 12, -1, 9, 10, 11, 12, -1, 9, 10, 11, 12, -1, 9, 10, 11, 12, -1, 9, 10, 11, 12, -1, 9, 10, 11, 12, -1, 9, 10, 11, 12, -1, 9, 10, 11, 12, -1, 9, 10, 11, 12, -1
+        ]
+      }
+    }
+  ]
+  name "belt"
+  boundingObject Group {
+    children [
+      Pose {
+        translation 1.565 0 0.20500000000000002
+        children [
+          Box {
+            size 0.03 0.56 0.41000000000000003
+          }
+        ]
+      }
+      Pose {
+        translation -1.565 0 0.20500000000000002
+        children [
+          Box {
+            size 0.03 0.56 0.41000000000000003
+          }
+        ]
+      }
+      Pose {
+        translation 0 -0.265 0.20500000000000002
+        children [
+          Box {
+            size 3.1 0.03 0.41000000000000003
+          }
+        ]
+      }
+      Pose {
+        translation 0 0.265 0.20500000000000002
+        children [
+          Box {
+            size 3.1 0.03 0.41000000000000003
+          }
+        ]
+      }
+    ]
+  }
+  controller "belt_controller"
+  controllerArgs [
+    "0.1"
+    "0.1"
+  ]
+}
+Table {
+  translation 0 -0.11 0
+  size 0.5 0.5 0.3
+  trayAppearance OldSteel {
+  }
+  legAppearance OldSteel {
+  }
+}
+Table {
+  translation -3.11 -0.91 0
+  name "table(1)"
+  size 0.5 0.5 0.3
+  trayAppearance OldSteel {
+  }
+  legAppearance OldSteel {
+  }
+}
+WoodenPallet {
+  translation -3.09 0 0
+}
