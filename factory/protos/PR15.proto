@@ -15,6 +15,7 @@ PROTO PR15 [
   field  SFBool      synchronization TRUE    # Is `Robot.synchronization`.
   field  SFBool      selfCollision   FALSE   # Is `Robot.selfCollision`.
   field  MFNode      toolSlot        []      # Extend the robot with new nodes at the end of the arm.
+  field MFNode       sensorsSlot     []  
 ]
 {
   Robot {
@@ -27,6 +28,9 @@ PROTO PR15 [
     synchronization IS synchronization
     selfCollision IS selfCollision
     children [
+      Group {
+        children IS sensorsSlot
+      }
       Solid {
         children [
           DEF base_link_visual CadShape {
@@ -40,6 +44,7 @@ PROTO PR15 [
             device [
               RotationalMotor {
                 name "pr15_shoulder_pan_joint"
+                maxVelocity 3.14
                 minPosition -3.14
                 maxPosition 3.14
                 maxTorque 10000
@@ -62,6 +67,7 @@ PROTO PR15 [
                   device [
                     RotationalMotor {
                       name "pr15_shoulder_lift_joint"
+                      maxVelocity 3.14
                       minPosition -3.14
                       maxPosition 3.14
                       maxTorque 10000
@@ -90,6 +96,7 @@ PROTO PR15 [
                         device [
                           RotationalMotor {
                             name "pr15_elbow_joint"
+                            maxVelocity 3.14
                             minPosition -3.14
                             maxPosition 3.14
                             maxTorque 10000
@@ -117,6 +124,7 @@ PROTO PR15 [
                               device [
                                 RotationalMotor {
                                   name "pr15_wrist1_joint"
+                                  maxVelocity 3.14
                                   minPosition -3.14
                                   maxPosition 3.14
                                   maxTorque 10000
@@ -144,6 +152,7 @@ PROTO PR15 [
                                     device [
                                       RotationalMotor {
                                         name "pr15_wrist2_joint"
+                                        maxVelocity 3.14
                                         minPosition -3.14
                                         maxPosition 3.14
                                         maxTorque 10000
@@ -167,6 +176,7 @@ PROTO PR15 [
                                           device [
                                             RotationalMotor {
                                               name "pr15_wrist3_joint"
+                                              maxVelocity 3.14
                                               minPosition -3.14
                                               maxPosition 3.14
                                               maxTorque 10000
