@@ -17,7 +17,7 @@
 /*
  * You may want to add macros here.
  */
-#define TIME_STEP 32
+#define TIME_STEP 8
 
 
 #define BELT_SPEED 0.1

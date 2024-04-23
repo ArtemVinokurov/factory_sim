@@ -23,7 +23,7 @@
 
 #include <webots/robot.h>
 #include <webots/utils/motion.h>
-#define TIME_STEP 32
+#define TIME_STEP 8
 #define JOINT_NUMBER 6
 int main() {
   wb_robot_init();
@@ -49,7 +49,7 @@ int main() {
   {
      wb_robot_set_custom_data("start");
      double pos1[6] = {0.0};
-     double pos2[6] = {-1.57,0,1.57,0,1.57,0};
+     double pos2[6] = {1.57,0,1.57,0,1.57,0};
      // for (int i = 0; i != JOINT_NUMBER; i++)
      // {
        // wb_motor_set_position(robot_motors[i], pos1[i]);

@@ -7,15 +7,17 @@ EXTERNPROTO "../protos/PR15.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/tables/protos/Table.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/appearances/protos/OldSteel.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/pallet/protos/WoodenPallet.proto"
-EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/containers/protos/CardboardBox.proto"
+IMPORTABLE EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/containers/protos/CardboardBox.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/devices/robotiq/protos/RobotiqEPickGripper.proto"
 EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/conveyors/protos/ConveyorBelt.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023b/projects/objects/factory/manhole/protos/SquareManhole.proto"
 
 WorldInfo {
+  basicTimeStep 4
 }
 Viewpoint {
-  orientation 0.21349381523453856 -0.11720325938052828 -0.9698885435178526 4.216603054061184
-  position 2.3151359661793154 -5.287023409418811 2.85648556733915
+  orientation -0.20546446002684227 0.2693189903183174 0.9408781202258878 1.3626343743916427
+  position -2.0630312666900315 -6.304088184394892 3.318613414320688
 }
 DirectionalLight {
   ambientIntensity 1
@@ -27,33 +29,88 @@ RectangleArena {
   }
   wallHeight 1
 }
-PR15 {
-  hidden translation_1 -1.3899264406092016e-08 -7.069961283079351e-10 -0.002719748707921965
-  hidden rotation_1 0.9999999997326235 -1.2157224575220232e-05 -1.9671168150249142e-05 0.0002098487421331827
-  hidden position_1_0 5.296999147740938e-05
-  hidden rotation_2 0 0 1 5.2969987510314996e-05
-  hidden position_2_0 8.658956970410078e-06
-  hidden rotation_3 -0.9999999999812557 4.329479899996988e-06 4.329461167265974e-06 1.5708000000187434
-  hidden position_3_0 8.637786519653486e-06
-  hidden rotation_4 0 0 0.9999999999999999 8.637790698264515e-06
-  hidden position_4_0 6.462511748280225e-06
-  hidden rotation_5 0 0 1 6.462501501057901e-06
-  hidden position_5_0 -2.260450205221961e-09
-  hidden rotation_6 1 1.13022547196183e-09 -1.1302205817185839e-09 1.5707999999999998
-  hidden position_6_0 1.3358688249665224e-06
-  hidden rotation_7 -0.9999999999995537 6.681078968749909e-07 6.681050061154062e-07 1.570800000000446
-  hidden position_8_0 1.2201363244588994e-11
-  translation -2.84 -0.91 0.31
-  name "PR15(1)"
-  controller "<none>"
-  toolSlot [
-    RobotiqEPickGripper {
-      rotation 0 1 0 3.14
-    }
-  ]
+WoodenPallet {
+  translation -2.22 -0.38 0.01
+  name "wooden pallet(1)"
+  size 0.8 0.6 0.09
+}
+SquareManhole {
+  translation -2.25 1.9 0
+  size 1 1 0.4
 }
 Robot {
   children [
+    DEF stick_robot PR15 {
+      translation 0.01 -0.34 0.31
+      rotation 0 0 1 -1.57
+      controller "stick_robot"
+      supervisor TRUE
+      toolSlot [
+        RobotiqEPickGripper {
+          rotation 0 1 0 3.14
+        }
+      ]
+    }
+    PR15 {
+      translation -2.2 -0.98 0.3
+      name "PR15(1)"
+      controller "palletizer_controller"
+      supervisor TRUE
+      toolSlot [
+        DEF vacuum_gripper RobotiqEPickGripper {
+          rotation 0 1 0 3.14
+        }
+      ]
+      sensorsSlot [
+        DEF place_box_pos Pose {
+          translation 0.26 0.73 -0.02
+        }
+        Pose {
+          translation 0.71 0.29 0.18
+          children [
+            Group {
+              children [
+                DistanceSensor {
+                  rotation 0 0 1 -1.57
+                  name "pallet_box_detector_2"
+                  lookupTable [
+                    0 0 0
+                    10 1000 0
+                  ]
+                  type "laser"
+                  aperture 0.001
+                }
+                DistanceSensor {
+                  translation -0.23 -0.000183153 0
+                  rotation 0 0 1 -1.57
+                  name "pallet_box_detector_1"
+                  lookupTable [
+                    0 0 0
+                    10 1000 0
+                  ]
+                  type "laser"
+                  aperture 0.001
+                }
+              ]
+            }
+          ]
+        }
+        Pose {
+          translation 0.58 -0.03 0.35
+        }
+      ]
+    }
+    DistanceSensor {
+      translation 1.17955 -0.717957 0.46
+      rotation 0 0 1 -1.57
+      name "next_box_trigger"
+      lookupTable [
+        0 0 0
+        10 1000 0
+      ]
+      type "laser"
+      aperture 0.001
+    }
     DistanceSensor {
       translation 0.089552 -0.718826 0.46
       rotation 0 0 1 -1.57
@@ -66,11 +123,9 @@ Robot {
       aperture 0.001
     }
     DEF conveyor_belt ConveyorBelt {
-      hidden translation_1 -1.5693192796373268e-06 9.128757749721217e-10 0.3074827332302954
-      hidden rotation_1 0.030096151482727755 0.9987810083049147 -0.03912440562291823 2.072348191470245e-06
-      translation -0.82 -1.01 0
+      translation 0.08 -1.01156 0
       rotation 0 0 0.9999999999999999 3.14
-      size 3.1 0.5 0.41
+      size 3.7 0.5 0.41
       speed 0.25
       acceleration 1000
     }
@@ -85,57 +140,9 @@ Robot {
       type "laser"
       aperture 0.001
     }
-    PR15 {
-      hidden translation_1 -2.281059264842844e-07 -9.302143627598625e-08 -0.0027210116184230304
-      hidden rotation_1 0.6458025002908143 -0.7635043258670596 -0.0005244048244133894 0.00022617279743620194
-      hidden position_1_0 -1.569999999562403
-      hidden linearVelocity_1 -1.5868555256043718e-16 2.5671619253954826e-13 -4.971572629935082e-13
-      hidden angularVelocity_1 9.05813447938896e-13 -8.752335988657287e-14 -4.509788044854571e-14
-      hidden rotation_2 0 0 -1 1.569999999562403
-      hidden position_2_0 1.0562034865390758e-05
-      hidden linearVelocity_2 -1.3466456230168435e-14 3.7590945591771725e-13 -9.949537379289152e-13
-      hidden angularVelocity_2 1.855580507235495e-12 -1.7520356071328388e-13 -8.022842020240078e-14
-      hidden rotation_3 -0.999999999972111 5.281019158400124e-06 5.2809963085628065e-06 1.570800000027889
-      hidden position_3_0 1.5700105576244037
-      hidden linearVelocity_3 -1.3638730574580327e-14 6.410319872897114e-13 -1.5092640557365738e-12
-      hidden angularVelocity_3 2.441791852841618e-12 -2.1566449982378883e-13 -9.832155977376673e-14
-      hidden rotation_4 0 0 1 1.570010557624404
-      hidden position_4_0 -1.7671124836631815e-06
-      hidden linearVelocity_4 -1.1326281057377491e-13 -2.2499688224820666e-13 -2.005975058146481e-12
-      hidden angularVelocity_4 3.0667359318850895e-12 -2.5291863272522004e-13 -1.176914242306343e-13
-      hidden rotation_5 0 0 -1 1.7671545839755625e-06
-      hidden position_5_0 1.5699999998756589
-      hidden linearVelocity_5 -1.4527453006122275e-13 3.2643020416459853e-14 -3.3382175552069445e-12
-      hidden angularVelocity_5 -5.346545693645581e-07 -4.2596180944168255e-10 -1.0789321293475287e-10
-      hidden rotation_6 0.5776574825614318 -0.5771978498900647 0.5771953524787558 2.0939375255690336
-      hidden position_6_0 4.049962330195526e-13
-      hidden linearVelocity_6 -7.17528226678842e-12 2.1591690267158548e-11 3.4748701033597724e-08
-      hidden angularVelocity_6 -5.346536663706802e-07 -4.2596279154492954e-10 -1.0789291599096905e-10
-      hidden rotation_7 -1 -6.485656984837271e-11 -6.485628922782078e-11 1.5707999999999995
-      hidden linearVelocity_7 3.817251503323853e-11 -6.435606435518756e-08 6.419394898650822e-08
-      hidden angularVelocity_7 -5.346532530971775e-07 -4.2596244494789225e-10 -1.0789587489106168e-10
-      hidden position_8_0 9.809995338348614e-09
-      hidden translation_13 0 0 0.13700000980675162
-      hidden linearVelocity_13 7.15421669643251e-11 -1.0624677654568036e-07 6.421975895509746e-08
-      hidden angularVelocity_13 -5.346532599955407e-07 -4.259624709766117e-10 -1.0789587965793089e-10
-      translation 0.01 -0.34 0.31
-      controller "robot_control"
-      customData "start"
-      toolSlot [
-        RobotiqEPickGripper {
-          rotation 0 1 0 3.14
-        }
-      ]
-    }
   ]
-  controller "stick_controller"
+  controller "supervisor"
   supervisor TRUE
-}
-CardboardBox {
-  translation 0.56503 -0.972361 0.534914
-  rotation -3.786428343150679e-05 0.0059957465608918865 -0.9999820246331798 0.0015637578276650559
-  size 0.25 0.25 0.25
-  mass 0.1
 }
 TexturedBackground {
   texture "factory"
@@ -149,7 +156,7 @@ Table {
   }
 }
 Table {
-  translation -2.83 -0.91 0
+  translation -2.21 -0.99 0
   name "table(1)"
   size 0.5 0.5 0.3
   trayAppearance OldSteel {
@@ -157,6 +164,62 @@ Table {
   legAppearance OldSteel {
   }
 }
-WoodenPallet {
-  translation -3.09 0 0
+DEF Pallet Pose {
+  translation 0 0.65 -0.15
+  children [
+    DEF done_box_group Group {
+      children [
+        CardboardBox {
+          translation -2.4688298490815566 -0.382669000425211 0.42498038000000016
+          rotation 7.384305379778617e-17 -1.2914111141243719e-15 -1 0.01580905472441497
+          name "cardboard box(1)"
+          size 0.25 0.25 0.25
+          mass 0.1
+        }
+        CardboardBox {
+          translation -2.2088029989363367 -0.3767888342792904 0.42498037809738465
+          rotation -7.546896482866814e-06 -0.0007190361173880388 -0.9999997414650197 0.01580902975721556
+          name "cardboard box(5)"
+          size 0.25 0.25 0.25
+          mass 0.1
+        }
+        CardboardBox {
+          translation -1.9588385748628456 -0.3807451674338349 0.4249803818864195
+          rotation 7.562112540397149e-06 0.0007209544170344103 -0.9999997400837378 0.015809013700022977
+          name "cardboard box(3)"
+          size 0.25 0.25 0.25
+          mass 0.1
+        }
+        CardboardBox {
+          translation -2.454618630385139 -0.11286486561897113 0.42498038531239923
+          rotation -7.480370855226589e-06 -0.0009102943708595098 -0.9999995856540154 0.01580905771175658
+          name "cardboard box(6)"
+          size 0.25 0.25 0.25
+          mass 0.1
+        }
+        CardboardBox {
+          translation -2.2046540357216236 -0.11681709324540879 0.42498037056578486
+          rotation 2.4938105704045783e-06 0.000288695079520354 -0.9999999583244653 0.01580906346435796
+          name "cardboard box(2)"
+          size 0.25 0.25 0.25
+          mass 0.1
+        }
+        CardboardBox {
+          translation -1.9546871982153753 -0.1207720424773121 0.42498038410155825
+          rotation 4.976829856304599e-06 0.0006203655766114496 -0.9999998075608729 0.01580908839024373
+          name "cardboard box(4)"
+          size 0.25 0.25 0.25
+          mass 0.1
+        }
+      ]
+    }
+    Pose {
+      translation -2.22 -0.25 0.3
+    }
+    WoodenPallet {
+      translation -2.22 -0.28 0.16
+      name "wooden pallet(2)"
+      size 0.8 0.6 0.14
+    }
+  ]
 }

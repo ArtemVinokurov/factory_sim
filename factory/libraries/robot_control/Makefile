@@ -14,9 +14,14 @@
 
 INCLUDE = -I"../Reflexxes/include"
 LIBRARIES = -L"../Reflexxes/lib/shared" -l:libReflexxesTypeII.so
+USE_C_API = true
+# null :=
+# space := $(null) $(null)
+# CXX_SOURCES = $(wildcard *.cpp)
+# WEBOTS_HOME_PATH?=$(subst $(space),\ ,$(strip $(subst \,/,$(WEBOTS_HOME))))
+# include $(WEBOTS_HOME_PATH)/resources/Makefile.include
 
 null :=
 space := $(null) $(null)
-CXX_SOURCES = $(wildcard *.cpp)
 WEBOTS_HOME_PATH?=$(subst $(space),\ ,$(strip $(subst \,/,$(WEBOTS_HOME))))
 include $(WEBOTS_HOME_PATH)/resources/Makefile.include
