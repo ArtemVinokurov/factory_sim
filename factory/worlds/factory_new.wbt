@@ -16,8 +16,8 @@ WorldInfo {
   basicTimeStep 4
 }
 Viewpoint {
-  orientation -0.20546446002684227 0.2693189903183174 0.9408781202258878 1.3626343743916427
-  position -2.0630312666900315 -6.304088184394892 3.318613414320688
+  orientation -0.3099475562396413 0.028522966292928532 0.9503257087835344 2.9375165055120145
+  position 4.309228701020315 -0.4194951065173505 2.7371759366582826
 }
 DirectionalLight {
   ambientIntensity 1
@@ -28,6 +28,131 @@ RectangleArena {
   floorAppearance Plaster {
   }
   wallHeight 1
+}
+Table {
+  translation 2.35 -0.31 0
+  name "table(4)"
+  size 0.5 0.5 0.3
+  trayAppearance OldSteel {
+  }
+  legAppearance OldSteel {
+  }
+}
+PR15 {
+  translation 1.64 -0.38 0.3
+  rotation 0 0 -1 -5.307179586466759e-06
+  name "PR15(1)"
+  controller "box_robot"
+  toolSlot [
+    RobotiqEPickGripper {
+      rotation 0 1 0 3.14
+    }
+  ]
+}
+Table {
+  translation 1.65 -0.39 0
+  name "table(3)"
+  size 0.5 0.5 0.3
+  trayAppearance OldSteel {
+  }
+  legAppearance OldSteel {
+  }
+}
+Table {
+  translation 1.53 -1.78 0
+  name "table(2)"
+  size 0.5 0.5 0.3
+  trayAppearance OldSteel {
+  }
+  legAppearance OldSteel {
+  }
+}
+PR15 {
+  translation 1.52 -1.77 0.3
+  rotation 0 0 1 -1.57
+  controller "<none>"
+  toolSlot [
+    DEF TXLGripper Robot {
+      translation 0.0100006 -1.10196e-07 0
+      rotation 0 0 1 1.5708
+      children [
+        Pose {
+          translation 0 0 -0.126
+          rotation 0 1 0 0
+          children [
+            VacuumGripper {
+              boundingObject Box {
+                size 0.3 0.4 0.005
+              }
+              locked TRUE
+              tensileStrength 1000
+              shearStrength 2000
+            }
+          ]
+        }
+        Pose {
+          translation 0 0 -0.05
+          children [
+            DEF gripper_visual CadShape {
+              url [
+                "../protos/PR15/meshes/visual/gripper.dae"
+              ]
+            }
+          ]
+        }
+      ]
+      name "robot(1)"
+    }
+  ]
+}
+CardboardBox {
+  translation 2.36305 -0.319046 0.434972
+  rotation 4.903809999941035e-06 -3.933849999952698e-08 0.9999999999879756 3.12578
+  name "cardboard box(7)"
+  size 0.32 0.42 0.25
+  mass 0.1
+}
+DEF TXLGripper Robot {
+  translation 0.93 0.18 0.33
+  children [
+    Pose {
+      translation 0 0 -0.126
+      rotation 0 1 0 0
+      children [
+        VacuumGripper {
+          boundingObject Box {
+            size 0.3 0.4 0.005
+          }
+          physics Physics {
+          }
+          locked TRUE
+          tensileStrength 1000
+          shearStrength 2000
+        }
+      ]
+    }
+    Pose {
+      translation 0 0 -0.05
+      children [
+        DEF gripper_visual CadShape {
+          url [
+            "../protos/PR15/meshes/visual/gripper.dae"
+          ]
+        }
+      ]
+    }
+  ]
+  name "robot(1)"
+  boundingObject Pose {
+    translation 0 0 -0.05
+    children [
+      Mesh {
+        url [
+          "../protos/PR15/meshes/collision/gripper.stl"
+        ]
+      }
+    ]
+  }
 }
 WoodenPallet {
   translation -2.22 -0.38 0.01
@@ -71,6 +196,7 @@ Robot {
             Group {
               children [
                 DistanceSensor {
+                  translation -0.05 -3.98164e-05 0
                   rotation 0 0 1 -1.57
                   name "pallet_box_detector_2"
                   lookupTable [
@@ -205,7 +331,7 @@ DEF Pallet Pose {
           mass 0.1
         }
         CardboardBox {
-          translation -1.9546871982153753 -0.1207720424773121 0.42498038410155825
+          translation -0.0088272 0.858614 0.27498
           rotation 4.976829856304599e-06 0.0006203655766114496 -0.9999998075608729 0.01580908839024373
           name "cardboard box(4)"
           size 0.25 0.25 0.25
@@ -222,4 +348,97 @@ DEF Pallet Pose {
       size 0.8 0.6 0.14
     }
   ]
+}
+DEF Sausages Solid {
+  translation 1.06 0.03 0.378
+  children [
+    Pose {
+      children [
+        Group {
+          children [
+            Pose {
+              translation 0 0.36 0
+              children [
+                CadShape {
+                  url [
+                    "sausage.dae"
+                  ]
+                }
+              ]
+            }
+            Pose {
+              translation 0 0.3 0
+              children [
+                CadShape {
+                  url [
+                    "sausage.dae"
+                  ]
+                }
+              ]
+            }
+            Pose {
+              translation 0 0.24 0
+              children [
+                CadShape {
+                  url [
+                    "sausage.dae"
+                  ]
+                }
+              ]
+            }
+            Pose {
+              translation 0 0.18 0
+              children [
+                CadShape {
+                  url [
+                    "sausage.dae"
+                  ]
+                }
+              ]
+            }
+            Pose {
+              translation 0 0.12 0
+              children [
+                CadShape {
+                  url [
+                    "sausage.dae"
+                  ]
+                }
+              ]
+            }
+            Pose {
+              translation 0 0.06 0
+              children [
+                CadShape {
+                  url [
+                    "sausage.dae"
+                  ]
+                }
+              ]
+            }
+            Pose {
+              children [
+                CadShape {
+                  url [
+                    "sausage.dae"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "solid(1)"
+  boundingObject Pose {
+    translation -0.15 0.182 0.033
+    children [
+      Box {
+        size 0.3 0.42 0.06
+      }
+    ]
+  }
+  physics Physics {
+  }
 }

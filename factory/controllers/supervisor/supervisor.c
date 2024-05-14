@@ -17,7 +17,7 @@
 #define TIME_STEP 8
 #define BELT_SPEED 0.25
 
-enum {WAIT_BOX, MOVE_BOX, WAIT_STICK};   
+enum {WAIT_BOX, MOVE_BOX, WAIT_STICK, FINISH};   
 
 int main(int argc, char **argv) {
   wb_robot_init();
@@ -42,6 +42,8 @@ int main(int argc, char **argv) {
   WbNodeRef root_node = wb_supervisor_node_get_root();
   WbFieldRef children_field = wb_supervisor_node_get_field(root_node, "children");
   wb_supervisor_field_import_mf_node_from_string(children_field, -1, "CardboardBox {translation 1.7 -1.026 0.54 size 0.25 0.25 0.25 mass 0.1}");
+  int box_count = 5;
+  
   while (wb_robot_step(TIME_STEP) != -1) {
       switch(state)
       {
@@ -59,7 +61,7 @@ int main(int argc, char **argv) {
             wb_supervisor_field_set_sf_float(belt_speed, 0.0);
             wb_supervisor_field_set_sf_string(robot_state, "start");
             state = WAIT_STICK;
-            wb_robot_step(TIME_STEP);
+            //wb_robot_step(TIME_STEP);
           }
           break;
           
@@ -69,9 +71,16 @@ int main(int argc, char **argv) {
             wb_supervisor_field_set_sf_float(belt_speed, BELT_SPEED);
             state = WAIT_BOX;
             wb_supervisor_field_import_mf_node_from_string(children_field, -1, "CardboardBox {translation 1.7 -1.026 0.54 size 0.25 0.25 0.25 mass 0.1}");
+            box_count--;
+            if (box_count == 0)
+            {
+              state = FINISH;
+            }
           }
           break;
       }
+      
+      if (state == FINISH) break;
       //printf("state: %i\n", state); 
   };
 

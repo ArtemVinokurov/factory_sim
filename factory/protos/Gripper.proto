@@ -1,0 +1,31 @@
+#VRML_SIM R2023b utf8
+# Describe the functionality of your PROTO here.
+
+PROTO Gripper [
+  field  SFVec3f    translation 0 0 0
+  field  SFRotation rotation     0 0 1 0
+  field  SFString   name        "Vacuum Gripper"
+]
+{
+  Solid {
+    translation IS translation
+    rotation IS rotation
+    children [
+      Pose {
+        translation 0 0 0.095
+        children [
+          DEF gripper_visual CadShape {
+            url "PR15/meshes/visual/gripper.dae"
+          }
+          DEF EPICK Shape {
+            geometry Mesh {
+              url [
+                "PR15/meshes/collision/gripper.stl"
+              ]
+            }
+          }
+          ]
+          }
+   ]
+         }
+         }

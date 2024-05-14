@@ -137,11 +137,11 @@ def main():
     
     x = place_pos_init[0]
     y = place_pos_init[1]
-    z = place_pos_init[2] + tool_offset
+    z = place_pos_init[2] + tool_offset + 0.05
     
     
     targets_point = [[x,y,z], [x-0.25, y, z], [x-0.5,y,z],
-                     [x-0.5,y-0.25,z], [x-0.25, y-0.25, z], [x,y-0.25,z],
+                     [x-0.5,y-0.27,z], [x-0.25, y-0.27, z], [x,y-0.27,z],
                      [x,y,z], [x-0.25, y, z], [x-0.5,y,z],
                      [x-0.5,y-0.25,z], [x-0.25, y-0.25, z], [x,y-0.25,z]]
     iterator = 1
@@ -178,6 +178,7 @@ def main():
     count_box = 0
     
     grab_box_point = [0.58, -0.03, 0.47]
+    up_grab_point = [0.54, -0.03, 0.6]
     start_point = [0.58, -0.03, 0.51] 
     while supervisor.step(timeStep) != -1:
     
@@ -188,13 +189,15 @@ def main():
             move_point(motors, armChain, start_point, "all", rot)
             delay(0.5)
             move_point(motors, armChain, grab_box_point, "all", rot)
+            
             vacuum.turnOn()
-            delay(1)
+            delay(1.0)
+            # move_point(motors, armChain, up_grab_point, "all", rot)
             move_joints([1.57, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
             delay(0.5)
             rot = np.array([[1,0,0], [0,-1,0], [0,0,1]])
             
-            middle_point = [aim_pt[0], aim_pt[1], aim_pt[2] + 0.35]
+            middle_point = [aim_pt[0], aim_pt[1], aim_pt[2] + 0.3]
            # middle_point[2] += 0.1
             move_point(motors, armChain, middle_point, "all", rot)
             delay(1)
