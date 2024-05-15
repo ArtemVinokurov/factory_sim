@@ -16,8 +16,8 @@ WorldInfo {
   basicTimeStep 4
 }
 Viewpoint {
-  orientation -0.3095438503782907 -0.22637435333005418 0.923546023134409 4.30032479598604
-  position 5.155635920352981 3.9911385302351094 5.747688253143
+  orientation 0.345526191870453 0.18501749629053604 -0.9199892264575081 2.252492472685908
+  position 3.598775347453005 2.495914680356009 3.182091550230542
 }
 DirectionalLight {
   ambientIntensity 1
@@ -35,9 +35,9 @@ ConveyorBelt {
   size 3.8 0.5 0.41
 }
 Table {
-  translation 2.35 -0.31 0
+  translation 2.35 0 0
   name "table(4)"
-  size 0.5 0.5 0.3
+  size 0.5 0.5 0.5
   trayAppearance OldSteel {
   }
   legAppearance OldSteel {
@@ -76,49 +76,11 @@ PR15 {
   translation 1.52 -1.77 0.3
   rotation 0 0 1 -1.57
   name "PR15(5)"
-  controller "sausage_pallet_controller"
+  controller "packing_controller"
   supervisor TRUE
   toolSlot [
-    Solid {
-      rotation 0 0 1 1.57
-      children [
-        Pose {
-          translation 0 0 -0.05
-          children [
-            DEF gripper_visual CadShape {
-              url [
-                "../protos/PR15/meshes/visual/gripper.dae"
-              ]
-            }
-          ]
-        }
-        Pose {
-          translation 0 0 -0.126
-          rotation 0 1 0 0
-          children [
-            VacuumGripper {
-              translation 0 0 -1.1771999999521388e-06
-              boundingObject Box {
-                size 0.3 0.4 0.005
-              }
-              tensileStrength 1000
-              shearStrength 2000
-              linearVelocity 0 0 -2.3921685146537195e-15
-            }
-          ]
-        }
-      ]
-      name "gripper"
-      boundingObject Pose {
-        translation 0 0 -0.05
-        children [
-          Mesh {
-            url [
-              "../protos/PR15/meshes/collision/gripper.stl"
-            ]
-          }
-        ]
-      }
+    RobotiqEPickGripper {
+      rotation 0 1 0 3.14
     }
   ]
   sensorsSlot [
@@ -146,7 +108,7 @@ PR15 {
   ]
 }
 CardboardBox {
-  translation 2.36305 -0.319046 0.434972
+  translation 2.39833 0.0104371 0.624972
   rotation 4.903809999941035e-06 -3.933849999952698e-08 0.9999999999879756 3.12578
   name "cardboard box(7)"
   size 0.32 0.42 0.25
@@ -209,7 +171,7 @@ Robot {
     DEF stick_robot PR15 {
       translation 0.01 -0.34 0.31
       rotation 0 0 1 -1.57
-      controller "stick_robot"
+      controller "<none>"
       customData "ready"
       supervisor TRUE
       toolSlot [

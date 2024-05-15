@@ -123,7 +123,6 @@ def move_to_init_pos(motors):
 
 def main():
     filename = "pr15.urdf"
-    print(filename)
     armChain = Chain.from_urdf_file(filename, active_links_mask=[False, True, True, True, True, True, True])
     
     motors = []
@@ -142,10 +141,6 @@ def main():
     move_joints([0.0, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
     # delay(2)
     supervisor.step(timeStep)
-    for i in range(6):
-
-        current_pos = motors[i].getPositionSensor().getValue()
-        print(current_pos)
     while supervisor.step(timeStep) != -1:
         state = supervisor.getCustomData()
         if state == "start":
@@ -172,32 +167,6 @@ def main():
             move_point(motors, armChain, [x, y, z], "side")
             move_joints([0.0, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
             
-            
-
-            
-        
-            
-            
-            
-    
-    
-
-    # move_point(motors, armChain, [x, y, z], "side")
-
-    # while supervisor.step(timeStep) != -1:
-
-        # t = supervisor.getTime()
- 
-        # x = 0.6
-        # y = 0.0
-        # z = 0.5
-        # initial_position = [0] + [m.getPositionSensor().getValue() for m in motors]
-        # ikResults = armChain.inverse_kinematics([x, y, z], [0.0, 0.0, 1.0], "Z")
-        # print(ikResults)
-        
-        # for i in range(6):
-            # motors[i].setPosition(ikResults[i + 1])
-
 
 
 if __name__ == '__main__':

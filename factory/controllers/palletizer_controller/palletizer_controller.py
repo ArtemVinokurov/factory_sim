@@ -207,60 +207,6 @@ def main():
             move_joints([1.57, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
             move_joints([0.0, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
             count_box += 1
-        # move_point(motors, armChain, box_position, "down")
-        # delay(2)
-        # move_point(motors, armChain, place_pos_init, "down")
-        # delay(2)
-        # new_point = place_pos_init
-        # new_point[0] -= 0.25
-        # move_point(motors, armChain, new_point, "down")
-        # delay(2)
-        # move_joints([0.0, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
-        
-        # z = 0.485
-        # move_point(motors, armChain, [x, y, z], "down")
-        # delay(0.5)
-        # z = 0.55
-        # move_point(motors, armChain, [x, y, z], "down")
-        # y = 0.25
-        # move_point(motors, armChain, [x, y, z], "down")
-        # z = 0.2
-        # move_point(motors, armChain, [x, y, z], "side")
-        # y = 0.23
-        # move_point(motors, armChain, [x, y, z], "side")
-        # delay(0.5)
-        # supervisor.setCustomData("ready")
-        # y = 0.25
-        # move_point(motors, armChain, [x, y, z], "side")
-        # z = 0.55
-        # move_point(motors, armChain, [x, y, z], "side")
-        # move_joints([0.0, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
-        
-            
-
-            
-        
-            
-            
-            
-    
-    
-
-    # move_point(motors, armChain, [x, y, z], "side")
-
-    # while supervisor.step(timeStep) != -1:
-
-        # t = supervisor.getTime()
- 
-        # x = 0.6
-        # y = 0.0
-        # z = 0.5
-        # initial_position = [0] + [m.getPositionSensor().getValue() for m in motors]
-        # ikResults = armChain.inverse_kinematics([x, y, z], [0.0, 0.0, 1.0], "Z")
-        # print(ikResults)
-        
-        # for i in range(6):
-            # motors[i].setPosition(ikResults[i + 1])
 
 
 

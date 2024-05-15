@@ -158,7 +158,6 @@ def main():
     motors = []
     
     for link in armChain.links:
-        print(link.name)
         if 'joint' in link.name:
             motor = supervisor.getDevice(link.name)
             motor.setVelocity(3.14)
@@ -180,12 +179,12 @@ def main():
     up_grab_point = [0.54, -0.03, 0.6]
     start_point = [0.58, -0.03, 0.51] 
     while supervisor.step(timeStep) != -1:
-            continue
-        # if ps_1.getValue() < 400:
+        print(ps_1.getValue())
+        if ps_1.getValue() < 200:
             
             # aim_pt = targets_point[count_box]
-            # rot = np.array([[0,-1,0], [-1,0,0], [0,0,1]])
-            # move_point(motors, armChain, start_point, "all", rot)
+            rot = np.array([[0,-1,0], [-1,0,0], [0,0,1]])
+            move_point(motors, armChain, start_point, "all", rot)
             # delay(0.5)
             # move_point(motors, armChain, grab_box_point, "all", rot)
             
@@ -197,7 +196,7 @@ def main():
             # rot = np.array([[1,0,0], [0,-1,0], [0,0,1]])
             
             # middle_point = [aim_pt[0], aim_pt[1], aim_pt[2] + 0.3]
-           # middle_point[2] += 0.1
+           # #middle_point[2] += 0.1
             # move_point(motors, armChain, middle_point, "all", rot)
             # delay(1)
             # move_point(motors, armChain, aim_pt, "all", rot)
