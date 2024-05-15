@@ -16,8 +16,8 @@ WorldInfo {
   basicTimeStep 4
 }
 Viewpoint {
-  orientation -0.3099475562396413 0.028522966292928532 0.9503257087835344 2.9375165055120145
-  position 4.309228701020315 -0.4194951065173505 2.7371759366582826
+  orientation -0.3095438503782907 -0.22637435333005418 0.923546023134409 4.30032479598604
+  position 5.155635920352981 3.9911385302351094 5.747688253143
 }
 DirectionalLight {
   ambientIntensity 1
@@ -28,6 +28,11 @@ RectangleArena {
   floorAppearance Plaster {
   }
   wallHeight 1
+}
+ConveyorBelt {
+  translation 2.87 -2.43 0
+  rotation 0 0 1 3.14
+  size 3.8 0.5 0.41
 }
 Table {
   translation 2.35 -0.31 0
@@ -70,26 +75,13 @@ Table {
 PR15 {
   translation 1.52 -1.77 0.3
   rotation 0 0 1 -1.57
-  controller "<none>"
+  name "PR15(5)"
+  controller "sausage_pallet_controller"
+  supervisor TRUE
   toolSlot [
-    DEF TXLGripper Robot {
-      translation 0.0100006 -1.10196e-07 0
-      rotation 0 0 1 1.5708
+    Solid {
+      rotation 0 0 1 1.57
       children [
-        Pose {
-          translation 0 0 -0.126
-          rotation 0 1 0 0
-          children [
-            VacuumGripper {
-              boundingObject Box {
-                size 0.3 0.4 0.005
-              }
-              locked TRUE
-              tensileStrength 1000
-              shearStrength 2000
-            }
-          ]
-        }
         Pose {
           translation 0 0 -0.05
           children [
@@ -100,8 +92,56 @@ PR15 {
             }
           ]
         }
+        Pose {
+          translation 0 0 -0.126
+          rotation 0 1 0 0
+          children [
+            VacuumGripper {
+              translation 0 0 -1.1771999999521388e-06
+              boundingObject Box {
+                size 0.3 0.4 0.005
+              }
+              tensileStrength 1000
+              shearStrength 2000
+              linearVelocity 0 0 -2.3921685146537195e-15
+            }
+          ]
+        }
       ]
-      name "robot(1)"
+      name "gripper"
+      boundingObject Pose {
+        translation 0 0 -0.05
+        children [
+          Mesh {
+            url [
+              "../protos/PR15/meshes/collision/gripper.stl"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+  sensorsSlot [
+    Pose {
+      translation 0.340304 0.670296 0.13
+      rotation 0 0 1 1.57
+      children [
+        Group {
+          children [
+            DistanceSensor {
+              translation -0.05 -3.98164e-05 0
+              rotation 0 0 1 -1.57
+              name "sausage_detector"
+              lookupTable [
+                0 0 0
+                10 1000 0
+              ]
+              type "laser"
+              aperture 0.001
+            }
+          ]
+        }
+      ]
     }
   ]
 }
@@ -113,13 +153,14 @@ CardboardBox {
   mass 0.1
 }
 DEF TXLGripper Robot {
-  translation 0.93 0.18 0.33
+  translation -1.96 1.69 0.32
   children [
     Pose {
       translation 0 0 -0.126
       rotation 0 1 0 0
       children [
         VacuumGripper {
+          name "end effector"
           boundingObject Box {
             size 0.3 0.4 0.005
           }
@@ -169,6 +210,7 @@ Robot {
       translation 0.01 -0.34 0.31
       rotation 0 0 1 -1.57
       controller "stick_robot"
+      customData "ready"
       supervisor TRUE
       toolSlot [
         RobotiqEPickGripper {
@@ -331,7 +373,7 @@ DEF Pallet Pose {
           mass 0.1
         }
         CardboardBox {
-          translation -0.0088272 0.858614 0.27498
+          translation -1.94467 -0.120912 0.424992
           rotation 4.976829856304599e-06 0.0006203655766114496 -0.9999998075608729 0.01580908839024373
           name "cardboard box(4)"
           size 0.25 0.25 0.25
@@ -350,7 +392,7 @@ DEF Pallet Pose {
   ]
 }
 DEF Sausages Solid {
-  translation 1.06 0.03 0.378
+  translation 4.71 -2.58 0.408
   children [
     Pose {
       children [

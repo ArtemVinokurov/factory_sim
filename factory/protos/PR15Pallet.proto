@@ -1,0 +1,379 @@
+#VRML_SIM R2023b utf8
+# license: Apache License 2.0
+# license url: http://www.apache.org/licenses/LICENSE-2.0
+
+PROTO PR15Pallet [
+  field  SFVec3f     translation     0 0 0
+  field  SFRotation  rotation        0 0 1 0
+  field  SFString    name            "PR15Pallet"  # Is `Robot.name`.
+  field  SFString    controller      "void"  # Is `Robot.controller`.
+  field  MFString    controllerArgs  []      # Is `Robot.controllerArgs`.
+  field  SFString    customData      ""      # Is `Robot.customData`.
+  field  SFBool      supervisor      FALSE   # Is `Robot.supervisor`.
+  field  SFBool      synchronization TRUE    # Is `Robot.synchronization`.
+  field  SFBool      selfCollision   FALSE   # Is `Robot.selfCollision`.
+  field  MFNode      toolSlot        []      # Extend the robot with new nodes at the end of the arm.
+  field MFNode       sensorsSlot     []  
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    controller IS controller
+    controllerArgs IS controllerArgs
+    customData IS customData
+    supervisor IS supervisor
+    synchronization IS synchronization
+    selfCollision IS selfCollision
+    children [
+      Group {
+        children IS sensorsSlot
+      }
+      Solid {
+        children [
+          DEF base_link_visual CadShape {
+            url "PR15/meshes/visual/base_link.dae"
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              axis 0.000000 0.000000 1.000000
+              anchor 0.000000 0.000000 0.151000
+            }
+            device [
+              RotationalMotor {
+                name "pr15_shoulder_pan_joint"
+                maxVelocity 3.14
+                minPosition -3.14
+                maxPosition 3.14
+                maxTorque 10000
+              }
+              PositionSensor {
+                name "pr15_shoulder_pan_joint_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0.000000 0.000000 0.151000
+              children [
+                DEF shoulder_link_visual CadShape {
+                  url "PR15/meshes/visual/shoulder_link.dae"
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    axis 0.000000 1.000000 -0.000004
+                    anchor 0.000000 -0.100000 0.000000
+                  }
+                  device [
+                    RotationalMotor {
+                      name "pr15_shoulder_lift_joint"
+                      maxVelocity 3.14
+                      minPosition -3.14
+                      maxPosition 3.14
+                      maxTorque 10000
+                    }
+                    PositionSensor {
+                      name "pr15_shoulder_lift_joint_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0.000000 -0.100000 0.000000
+                    rotation -1.000000 0.000000 0.000000 1.570800
+                    children [
+                      Pose {
+                        rotation 1.000000 0.000000 0.000000 1.570800
+                        children [
+                          DEF upperarm_link_visual CadShape {
+                            url "PR15/meshes/visual/upperarm_link.dae"
+                          }
+                        ]
+                      }
+                      HingeJoint {
+                        jointParameters HingeJointParameters {
+                          axis 0.000000 0.000000 1.000000
+                          anchor 0.000000 -0.460000 0.000000
+                        }
+                        device [
+                          RotationalMotor {
+                            name "pr15_elbow_joint"
+                            maxVelocity 3.14
+                            minPosition -3.14
+                            maxPosition 3.14
+                            maxTorque 10000
+                          }
+                          PositionSensor {
+                            name "pr15_elbow_joint_sensor"
+                          }
+                        ]
+                        endPoint Solid {
+                          translation 0.000000 -0.460000 0.000000
+                          children [
+                            Pose {
+                              rotation 1.000000 0.000000 0.000000 1.570800
+                              children [
+                                DEF forearm_link_visual CadShape {
+                                  url "PR15/meshes/visual/forearm_link.dae"
+                                }
+                              ]
+                            }
+                            HingeJoint {
+                              jointParameters HingeJointParameters {
+                                axis 0.000000 0.000000 1.000000
+                                anchor 0.000000 -0.270000 -0.020500
+                              }
+                              device [
+                                RotationalMotor {
+                                  name "pr15_wrist1_joint"
+                                  maxVelocity 3.14
+                                  minPosition -3.14
+                                  maxPosition 3.14
+                                  maxTorque 10000
+                                }
+                                PositionSensor {
+                                  name "pr15_wrist1_joint_sensor"
+                                }
+                              ]
+                              endPoint Solid {
+                                translation 0.000000 -0.270000 -0.020500
+                                children [
+                                  Pose {
+                                    rotation 1.000000 0.000000 0.000000 1.570800
+                                    children [
+                                      DEF wrist1_link_visual CadShape {
+                                        url "PR15/meshes/visual/wrist1_link.dae"
+                                      }
+                                    ]
+                                  }
+                                  HingeJoint {
+                                    jointParameters HingeJointParameters {
+                                      axis 0.000000 -1.000000 -0.000004
+                                      anchor 0.000000 -0.065000 -0.055000
+                                    }
+                                    device [
+                                      RotationalMotor {
+                                        name "pr15_wrist2_joint"
+                                        maxVelocity 3.14
+                                        minPosition -3.14
+                                        maxPosition 3.14
+                                        maxTorque 10000
+                                      }
+                                      PositionSensor {
+                                        name "pr15_wrist2_joint_sensor"
+                                      }
+                                    ]
+                                    endPoint Solid {
+                                      translation 0.000000 -0.065000 -0.055000
+                                      rotation 1.000000 0.000000 0.000000 1.570800
+                                      children [
+                                        DEF wrist2_link_visual CadShape {
+                                          url "PR15/meshes/visual/wrist2_link.dae"
+                                        }
+                                        HingeJoint {
+                                          jointParameters HingeJointParameters {
+                                            axis 0.000000 1.000000 -0.000004
+                                            anchor 0.000000 -0.065000 0.055000
+                                          }
+                                          device [
+                                            RotationalMotor {
+                                              name "pr15_wrist3_joint"
+                                              maxVelocity 3.14
+                                              minPosition -3.14
+                                              maxPosition 3.14
+                                              maxTorque 10000
+                                            }
+                                            PositionSensor {
+                                              name "pr15_wrist3_joint_sensor"
+                                            }
+                                          ]
+                                          endPoint Solid {
+                                            translation 0.000000 -0.065000 0.055000
+                                            rotation -1.000000 0.000000 0.000000 1.570800
+                                            children [
+ Robot {
+  children [
+    Pose {
+      translation 0 0 -0.126
+      rotation 0 1 0 0
+      children [
+        VacuumGripper {
+          boundingObject Box {
+            size 0.3 0.4 0.005
+          }
+          physics Physics {
+          }
+          locked TRUE
+          tensileStrength 1000
+          shearStrength 2000
+        }
+      ]
+    }
+    Pose {
+      translation 0 0 -0.05
+      children [
+        DEF gripper_visual CadShape {
+          url [
+            "PR15/meshes/visual/gripper.dae"
+          ]
+        }
+      ]
+    }
+  ]
+  name "robot(1)"
+  boundingObject Pose {
+    translation 0 0 -0.05
+    children [
+      Mesh {
+        url [
+          "PR15/meshes/collision/gripper.stl"
+        ]
+      }
+    ]
+  }
+}
+                                              
+                                            ]
+
+                                            name "pr15_wrist3_link"
+                                            physics Physics {
+                                              density -1
+                                              mass 0.001000
+                                              centerOfMass [ 0.000000 0.000000 0.000000 ]
+                                              inertiaMatrix [
+                                                1.000000e-03 1.000000e-03 1.000000e-03
+                                                0.000000e+00 0.000000e+00 0.000000e+00
+                                              ]
+                                            }
+                                          }
+                                        }
+                                      ]
+                                      name "pr15_wrist2_link"
+                                      boundingObject Pose {
+                                        translation 0.000000 -0.003070 0.055000
+                                        rotation 1.000000 0.000000 0.000000 1.570800
+                                        children [
+                                          DEF wrist2_link_collision Mesh {
+                                            url "PR15/meshes/collision/wrist2_link_collision.stl"
+                                          }
+                                        ]
+                                      }
+                                      physics Physics {
+                                        density -1
+                                        mass 1.291000
+                                        centerOfMass [ 0.000000 0.000000 0.000000 ]
+                                        inertiaMatrix [
+                                          2.500000e-03 2.080000e-03 1.770000e-03
+                                          0.000000e+00 0.000000e+00 0.000000e+00
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                                name "pr15_wrist1_link"
+                                boundingObject Pose {
+                                  translation 0.000000 -0.004650 -0.055000
+                                  rotation 1.000000 0.000000 0.000000 1.570800
+                                  children [
+                                    DEF wrist1_link_collision Mesh {
+                                      url "PR15/meshes/collision/wrist1_link_collision.stl"
+                                    }
+                                  ]
+                                }
+                                physics Physics {
+                                  density -1
+                                  mass 1.291000
+                                  centerOfMass [ 0.000000 0.000000 0.000000 ]
+                                  inertiaMatrix [
+                                    2.500000e-03 2.080000e-03 1.770000e-03
+                                    0.000000e+00 0.000000e+00 0.000000e+00
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                          name "pr15_forearm_link"
+                          boundingObject Pose {
+                            translation 0.000000 0.000000 0.040100
+                            rotation 1.000000 0.000000 0.000000 3.141590
+                            children [
+                              DEF forearm_link_collision Mesh {
+                                url "PR15/meshes/collision/forearm_link_collision.stl"
+                              }
+                            ]
+                          }
+                          physics Physics {
+                            density -1
+                            mass 2.311000
+                            centerOfMass [ 0.000000 0.000000 0.000000 ]
+                            inertiaMatrix [
+                              3.241000e-02 3.123000e-02 4.380000e-03
+                              0.000000e+00 0.000000e+00 0.000000e+00
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                    name "pr15_upperarm_link"
+                    boundingObject Pose {
+                      translation 0.000000 0.000000 -0.093250
+                      rotation 1.000000 0.000000 0.000000 3.141590
+                      children [
+                        DEF upperarm_link_collision Mesh {
+                          url "PR15/meshes/collision/upperarm_link_collision.stl"
+                        }
+                      ]
+                    }
+                    physics Physics {
+                      density -1
+                      mass 8.341000
+                      centerOfMass [ 0.000000 0.000000 0.000000 ]
+                      inertiaMatrix [
+                        3.065800e-01 2.933000e-01 3.147000e-02
+                        0.000000e+00 0.000000e+00 0.000000e+00
+                      ]
+                    }
+                  }
+                }
+              ]
+              name "pr15_shoulder_link"
+              boundingObject Pose {
+                translation 0.000000 -0.060360 0.000000
+                rotation 1.000000 0.000000 0.000000 1.570800
+                children [
+                  DEF shoulder_link_collision Mesh {
+                    url "PR15/meshes/collision/shoulder_link_collision.stl"
+                  }
+                ]
+              }
+              physics Physics {
+                density -1
+                mass 3.661000
+                centerOfMass [ 0.000000 0.000000 0.000000 ]
+                inertiaMatrix [
+                  1.843000e-02 1.419000e-02 1.341000e-02
+                  0.000000e+00 0.000000e+00 0.000000e+00
+                ]
+              }
+            }
+          }
+        ]
+        name "pr15_base_link"
+        boundingObject Pose {
+          translation 0.000000 0.000000 0.025590
+          children [
+            DEF base_link_collision Mesh {
+              url "PR15/meshes/collision/base_link_collision.stl"
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 4.021000
+          centerOfMass [ 0.000000 0.000000 0.000000 ]
+          inertiaMatrix [
+            1.299000e-02 1.299000e-02 2.208000e-02
+            0.000000e+00 0.000000e+00 0.000000e+00
+          ]
+        }
+      }
+    ]
+    name IS name
+  }
+}

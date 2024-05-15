@@ -1,4 +1,4 @@
-"""inverse_kinematics controller."""
+"""sausage_pallet controller."""
 import sys
 import numpy as np
 import tempfile
@@ -129,22 +129,22 @@ def move_to_init_pos(motors):
 def main():
 
 
-    place_box_pos_node = supervisor.getFromDef("place_box_pos")
-    place_box_pos_ref = place_box_pos_node.getField("translation")
-    place_pos_init = place_box_pos_ref.getSFVec3f()
+    # place_box_pos_node = supervisor.getFromDef("place_box_pos")
+    # place_box_pos_ref = place_box_pos_node.getField("translation")
+    # place_pos_init = place_box_pos_ref.getSFVec3f()
     
     # targets_point = [place_pos_init] * 12
     
-    x = place_pos_init[0]
-    y = place_pos_init[1]
-    z = place_pos_init[2] + tool_offset + 0.05
+    # x = place_pos_init[0]
+    # y = place_pos_init[1]
+    # z = place_pos_init[2] + tool_offset + 0.05
     
     
-    targets_point = [[x,y,z], [x-0.25, y, z], [x-0.5,y,z],
-                     [x-0.5,y-0.27,z], [x-0.25, y-0.27, z], [x,y-0.27,z],
-                     [x,y,z], [x-0.25, y, z], [x-0.5,y,z],
-                     [x-0.5,y-0.25,z], [x-0.25, y-0.25, z], [x,y-0.25,z]]
-    iterator = 1
+    # targets_point = [[x,y,z], [x-0.25, y, z], [x-0.5,y,z],
+                     # [x-0.5,y-0.27,z], [x-0.25, y-0.27, z], [x,y-0.27,z],
+                     # [x,y,z], [x-0.25, y, z], [x-0.5,y,z],
+                     # [x-0.5,y-0.25,z], [x-0.25, y-0.25, z], [x,y-0.25,z]]
+    # iterator = 1
 
         
                 
@@ -158,6 +158,7 @@ def main():
     motors = []
     
     for link in armChain.links:
+        print(link.name)
         if 'joint' in link.name:
             motor = supervisor.getDevice(link.name)
             motor.setVelocity(3.14)
@@ -165,12 +166,10 @@ def main():
             position_sensor.enable(timeStep)
             motors.append(motor)
 
-    ps_1 = supervisor.getDevice("pallet_box_detector_1")
-    ps_2 = supervisor.getDevice("pallet_box_detector_2")
+    ps_1 = supervisor.getDevice("sausage_detector")
     ps_1.enable(timeStep)
-    ps_2.enable(timeStep)
     
-    vacuum = supervisor.getDevice("vacuum gripper")
+    vacuum = supervisor.getDevice('vacuum gripper')
     vacuum.enablePresence(timeStep)
     supervisor.step(timeStep)
     move_joints([0.0, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
@@ -181,32 +180,32 @@ def main():
     up_grab_point = [0.54, -0.03, 0.6]
     start_point = [0.58, -0.03, 0.51] 
     while supervisor.step(timeStep) != -1:
-    
-        if ps_1.getValue() < 400 and  ps_2.getValue() < 400:
+            continue
+        # if ps_1.getValue() < 400:
             
-            aim_pt = targets_point[count_box]
-            rot = np.array([[0,-1,0], [-1,0,0], [0,0,1]])
-            move_point(motors, armChain, start_point, "all", rot)
-            delay(0.5)
-            move_point(motors, armChain, grab_box_point, "all", rot)
+            # aim_pt = targets_point[count_box]
+            # rot = np.array([[0,-1,0], [-1,0,0], [0,0,1]])
+            # move_point(motors, armChain, start_point, "all", rot)
+            # delay(0.5)
+            # move_point(motors, armChain, grab_box_point, "all", rot)
             
-            vacuum.turnOn()
-            delay(1.0)
+            # vacuum.turnOn()
+            # delay(1.0)
             # move_point(motors, armChain, up_grab_point, "all", rot)
-            move_joints([1.57, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
-            delay(0.5)
-            rot = np.array([[1,0,0], [0,-1,0], [0,0,1]])
+            # move_joints([1.57, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
+            # delay(0.5)
+            # rot = np.array([[1,0,0], [0,-1,0], [0,0,1]])
             
-            middle_point = [aim_pt[0], aim_pt[1], aim_pt[2] + 0.3]
+            # middle_point = [aim_pt[0], aim_pt[1], aim_pt[2] + 0.3]
            # middle_point[2] += 0.1
-            move_point(motors, armChain, middle_point, "all", rot)
-            delay(1)
-            move_point(motors, armChain, aim_pt, "all", rot)
-            vacuum.turnOff()
-            delay(1)
-            move_joints([1.57, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
-            move_joints([0.0, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
-            count_box += 1
+            # move_point(motors, armChain, middle_point, "all", rot)
+            # delay(1)
+            # move_point(motors, armChain, aim_pt, "all", rot)
+            # vacuum.turnOff()
+            # delay(1)
+            # move_joints([1.57, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
+            # move_joints([0.0, 0.0, 1.57, 0.0, 1.57, 0.0], motors)
+            # count_box += 1
         # move_point(motors, armChain, box_position, "down")
         # delay(2)
         # move_point(motors, armChain, place_pos_init, "down")
@@ -266,3 +265,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

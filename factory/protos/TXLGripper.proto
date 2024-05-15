@@ -1,0 +1,53 @@
+#VRML_SIM R2023b utf8
+PROTO TXLGripper [
+  field  SFVec3f    translation 0 0 0
+  field  SFRotation rotation     0 0 1 0
+  field  SFString   name        "TXL Vacuum Gripper"
+]
+
+{
+ Robot {
+  translation IS translation
+  rotation IS rotation
+  name IS name
+  children [
+    Pose {
+      translation 0 0 -0.126
+      rotation 0 1 0 0
+      children [
+        VacuumGripper {
+          boundingObject Box {
+            size 0.3 0.4 0.005
+          }
+          physics Physics {
+          }
+          locked TRUE
+          tensileStrength 1000
+          shearStrength 2000
+        }
+      ]
+    }
+    Pose {
+      translation 0 0 -0.05
+      children [
+        DEF gripper_visual CadShape {
+          url [
+            "../protos/PR15/meshes/visual/gripper.dae"
+          ]
+        }
+      ]
+    }
+  ]
+  name "robot(1)"
+  boundingObject Pose {
+    translation 0 0 -0.05
+    children [
+      Mesh {
+        url [
+          "../protos/PR15/meshes/collision/gripper.stl"
+        ]
+      }
+    ]
+  }
+}
+}
